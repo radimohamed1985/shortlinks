@@ -4,6 +4,9 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteRule . /shortlinks/public/index.php [L]
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
