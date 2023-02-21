@@ -10,7 +10,20 @@ use AshAllenDesign\ShortURL\Facades\ShortURL;
 class createShortLink extends Controller
 {
     public function index(Request $request){
-        $shortURLObject = ShortURL::destinationUrl($request->url)->make();
+        $res=[];
+    if(str_starts_with($request->url,'https://')){
+        $res[] =$request->url;
+    }elseif(str_starts_with($request->url,'http://')){
+    $res[] =str_replace('http://','https://',$request->url);;
+
+    }elseif(str_starts_with($request->url,'www')){
+        $res[] ='https://'.$request->url;
+      }else{
+        $res[] ='https://'.$request->url;
+      }
+    //   $customkey= config('settings.Url_key_prefix');
+      $mykey=base64_encode($res[0]);
+        $shortURLObject = ShortURL::destinationUrl($res[0])->make();
         
         $shortURLObject->compain_id =$request->compain_id;
         $shortURLObject->save();

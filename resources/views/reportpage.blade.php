@@ -1,19 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.mydash')
 @section('content')
-<div class="container" id="downloadarea">
-    {{-- <h4 class="text-left " style="float:right"><a href="" class="btn btn-primary print" style="float:right">Print Report</a></h4> --}}
 
-<table class="table table-bordered">
+<div class="container  " id="downloadarea">
+
+<table class="table table-bordered reporttable">
     <thead class="table-dark">
         <td>id</td>
         <td>Date</td>
         <td>Destination</td>
         <td>Compain_type</td>
-        <td id="print">
-            <a href="" class="btn btn-primary print" style="float:right">Print Report</a>
-            <a href="" class="btn btn-primary Download" style="float:right">Download Report</a>
-
-        </td>
+     
     </thead>
     <tbody>
         @foreach ( $allcompains as $compain)
@@ -24,28 +20,31 @@
         @if ($compain->compain_id ==1|$compain->compain_id ==2|$compain->compain_id ==3)
         <td colspan="2">Short Link</td>
         @else
-        <td colspan="2">Form Link </td>
+        <td >Form Link </td>
 
         @endif
     </tr>
         @endforeach
     </tbody>
 </table>
+<div id="print">
+<a href="" class="btn btn-dark Download" style="float:right">Download Report</a>
+</div>
 </div>
 <h4 class="text-center " style="margin-top: 30px"><a href="{{url('/clientdashboard')}}" class="btn btn-primary" >Back To Dashboard</a></h4>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 
-    let printing =document.querySelector('.print')
-    let printingtab =document.querySelector('#print')
-    printing.addEventListener('click',function(e){
-        e.preventDefault();
-        printingtab.classList.add('hidden')
+    // let printing =document.querySelector('.print')
+    // let printingtab =document.querySelector('#print')
+    // printing.addEventListener('click',function(e){
+    //     e.preventDefault();
+    //     printingtab.classList.add('hidden')
 
-        window.print();
+    //     window.print();
 
-    })
+    // })
     
     let Download =document.querySelector('.Download')
     let Downloadtab =document.querySelector('#print')

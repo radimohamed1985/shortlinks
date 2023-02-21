@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.mydash')
 
 @section('content')
 <div class="container">
@@ -42,8 +42,8 @@
   @else
       
   <div class="mb-3 row">
-    <label for="exampleFormControlTextarea1" class="col-sm-6 col-form-label"><h6>Your Last Generated Link In Compain #{{$lastShortLink->compain_id}}</h6></label>
-    <div class="col-sm-6">
+    <label for="exampleFormControlTextarea1" class="col-sm-4 col-form-label"><h6>Your Last Generated Link In Compain #{{$lastShortLink->compain_id}}</h6></label>
+    <div class="col-sm-8">
 
     <textarea class="form-control" id="lastshortlink" rows="1" style="color:blue">{{$lastShortLink->default_short_url}}</textarea>
   </div>
@@ -61,7 +61,9 @@
                 </div>
         </div>
     </div>
-  <h4 class="text-center " style="margin-top: 30px"><a href="{{url('/clientdashboard')}}" class="btn btn-primary">Back To Dashboard</a></h4>
+    </div>
 
-</div>
+  <h4 class="text-center " style="margin-top: 30px"><a href="{{url('/clientdashboard')}}" class="btn btn-primary">Back To Dashboard</a></h4>
+  <script src="{{asset('js/main.js')}}"></script>
+
 @endsection
