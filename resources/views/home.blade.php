@@ -10,7 +10,8 @@
                 <div class="card-body text-center">
                  <form action="{{url('makeshortlink')}}" method="post" id="myForm">
                     @csrf
-                    <input type="text" name="url" id="url">
+                    <input type="text" name="url" id="url"  >
+
                     <input type="hidden" name="compain_id" value="{{$compain_id}}">
                     <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
                     <input type="submit" value="Make Short Link" id="makelink">
@@ -40,12 +41,21 @@
  
       
   @else
-      
+  <script>
+  let myinput = document.getElementById('url');
+  myinput.value ="{{$lastShortLink->destination_url}}"
+
+  myinput.addEventListener('focus',function(){
+
+    myinput.value =""
+
+});
+</script>
   <div class="mb-3 row">
     <label for="exampleFormControlTextarea1" class="col-sm-4 col-form-label"><h6>Your Last Generated Link In Compain #{{$lastShortLink->compain_id}}</h6></label>
     <div class="col-sm-8">
+    <p  id="lastshortlink" style="color:blue">{{$lastShortLink->default_short_url}}</p>
 
-    <textarea class="form-control" id="lastshortlink" rows="1" style="color:blue">{{$lastShortLink->default_short_url}}</textarea>
   </div>
   </div>
   <div class="mb-3 row">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lead;
+use App\Models\Lead2;
 use App\Http\Requests\StoreLeadRequest;
 use App\Http\Requests\UpdateLeadRequest;
 use Illuminate\Http\RedirectResponse;
@@ -16,7 +17,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $myleads =Lead::where('compain_user_id',auth()->user()->id)->get();
+        $myleads =Lead::where('compain_user_id',auth()->user()->id)->paginate(40);
         // dd($myleads);
 
         
@@ -536,13 +537,13 @@ class LeadController extends Controller
         "NL" => "هولندا",
         "HK" => "هونج كونج الصينية",
         );
-        foreach($myleads as $lead){
-    $ip_data = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=".$lead->ip));   
- 
-        $result['country'] = $ip_data->geoplugin_countryCode;
-        $result['city'] = $ip_data->geoplugin_city;
-    $ip =$countryList[$result['country']];
-    }
+//         foreach($myleads as $lead){
+//     $ip_data = file_get_contents('https://ipapi.co/185.16.38.34/json');   
+//  dd($ip_data);
+//         $result['country'] = $ip_data->geoplugin_countryCode;
+//         $result['city'] = $ip_data->geoplugin_city;
+//     $ip =$countryList[$result['country']];
+//     }
 
         return view('myleads',get_defined_vars());
 }
@@ -553,6 +554,7 @@ class LeadController extends Controller
     public function create(Request $request)
     {
       Lead::create($request->all());
+      Lead2::create($request->all());
 
        return redirect()->to($request->url2);
         
@@ -561,9 +563,13 @@ class LeadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLeadRequest $request)
+    public function deleteleads()
     {
-        //
+        Lead::truncate();
+//        $allleads= Lead::get();
+// foreach($allleads as$ $lead){
+// $lead->delete();
+// }
     }
 
     /**

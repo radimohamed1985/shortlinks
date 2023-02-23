@@ -15,7 +15,6 @@
        
     </thead>
     <tbody>
-
     
         @foreach ( $myleads as $lead)
         <tr>
@@ -25,7 +24,7 @@
         <td >{{$lead->phone}}</td>
         <td >{{$lead->email}}</td>
         <td >{{$lead->address}}</td>
-        <td >{{$ip}}</td>
+        <td  class="ip">{{$lead->ip}}</td>
         {{-- @if ($compain->compain_id ==1|$compain->compain_id ==2|$compain->compain_id ==3)
         <td >Short Link</td>
         @else
@@ -36,11 +35,11 @@
         @endforeach
     </tbody>
 </table>
+
+<div class="text-center">{{$myleads->links()}}</div>
 <div id="print">
 <a href="" class="btn btn-dark Download" style="float:right">Download Report</a>
 </div>
-</div>
-
 
 <h4 class="text-center " style="margin-top: 30px"><a href="{{url('/clientdashboard')}}" class="btn btn-primary" >Back To Dashboard</a></h4>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -63,24 +62,62 @@
         e.preventDefault();
         Downloadtab.classList.add('hidden')
         window.jsPDF = window.jspdf.jsPDF;
-
-var doc = new jsPDF();
-window.html2canvas = html2canvas;
-
-// Source HTMLElement or a string containing HTML.
-var elementHTML = document.querySelector("#downloadarea");
-doc.html(elementHTML, {
-    callback: function(doc) {
-        // Save the PDF
-        doc.save('sample-document.pdf');
-    },
-    x: 15,
-    y: 15,
-    width: 170, //target width in the PDF document
-    windowWidth: 650 //window width in CSS pixels
-});
-
+        var doc = new jsPDF();
+        window.html2canvas = html2canvas;
+        var elementHTML = document.querySelector("#downloadarea");
+        doc.html(elementHTML, {
+            callback: function(doc) {
+                // Save the PDF
+                doc.save('sample-document.pdf');
+            },
+            x: 15,
+            y: 15,
+            width: 170, //target width in the PDF document
+            windowWidth: 650 //window width in CSS pixels
+        })
+let delreq =new XMLHttpRequest();
+delreq.onreadystatechange = function(){
+    if(this.readyState ==4 && this.status==200){
+    }
+}
+delreq.open('GET',"/deleteleads");
+delreq.send();
+// window.location.reload();
     })
+
+    var ipAddress = document.querySelectorAll(".ip");
+     let myip =Array.from(ipAddress)
+
+     myip.forEach(function(el){
+    let x=el.innerText
+fetch('https://reallyfreegeoip.org/json/'+x)
+// fetch('https://ipapi.co/'+ x +'/json/')
+.then(function(response) {
+  response.json().then(jsonData => {
+    console.log(jsonData['city']);
+    // let res =JSON.parse(this.responseText)
+            el.innerText=jsonData['country_code']
+  });
+})
+.catch(function(error) {
+  console.log(error)
+});
+})
+
+myip.forEach(function(el){
+     let x=el.innerText
+     var xhttp1 = new XMLHttpRequest();
+    xhttp1.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(JSON.parse(this.responseText));
+            let res =JSON.parse(this.responseText)
+            el.innerText=res['country_name']
+        }
+    };
+    xhttp1.open("GET", "https://ip-api.io/json/" + x, true);
+    xhttp1.send();
+})
+
 </script>
 
 @endsection

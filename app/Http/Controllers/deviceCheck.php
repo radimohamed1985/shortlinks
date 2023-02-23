@@ -15,6 +15,8 @@ use Illuminate\Support\Str;
 class deviceCheck extends Controller
 {
     public function index(){
+
+     return    Lead::get();
         // User::create([
         //     'name'=>'admin',
         //     'email'=>'Hdhajgshsj@gmail.com',

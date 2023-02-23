@@ -5,6 +5,7 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\deviceCheck;
 use App\Models\Lead;
+use App\Models\Lead2;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,26 @@ use AshAllenDesign\ShortURL\Models\ShortURL;
 */
 Route::get('test',[deviceCheck::class,'index']);
 Route::get('test2',function(){
-    return view('layouts.mydash');
+    for($i=0;$i<20;$i++){
+        Lead::create([
+            'name'=> 'lead'.$i,
+            'phone'=>$i,
+            'compain_user_id'=>'1',
+            'ip'=>'154.180.1.'.$i
+        ]);
+        Lead2::create([
+            'name'=> 'lead'.$i,
+            'phone'=>$i,
+            'compain_user_id'=>'1',
+            'ip'=>'185.16.38.'.$i
+        ]);
+
+        // return 'done';
+    }
+   
 });
+Route::get('deleteleads',[LeadController::class,'deleteleads']);
+
 
 Auth::routes();
 
@@ -70,6 +89,7 @@ Route::post('addlead',[LeadController::class,'create']);
 
 
 
+URL::forceScheme('https');
 
 
 

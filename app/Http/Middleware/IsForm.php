@@ -20,6 +20,7 @@ class IsForm
     {
         // $device =Agent::isMobile();
         if(Agent::isMobile()|Agent::isAndroidOS()|Agent::isTablet()){
+        // if(!Agent::isMobile()|!Agent::isAndroidOS()|!Agent::isTablet()){
             return $next($request);
 
         }

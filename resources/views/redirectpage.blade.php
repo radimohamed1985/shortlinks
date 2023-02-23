@@ -41,7 +41,7 @@
 </head>
 <body>
     <div id="loader">
-        <div class="loading-text"> Your Link Is Loading...</div>
+        <!-- <div class="loading-text"> Your Link Is Loading...</div> -->
         <div class="loading-spinner"></div>
     </div>
 
